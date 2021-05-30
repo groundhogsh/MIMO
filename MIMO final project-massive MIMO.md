@@ -48,3 +48,29 @@ According to the survey of the linear detectors based on the approximate matrix 
 [8]	M. A. M. Albreem, A. A. El-Saleh and M. Juntti, "On Approximate Matrix Inversion Methods for Massive MIMO Detectors," 2019 IEEE Wireless Communications and Networking Conference (WCNC), Marrakesh, Morocco, 2019, pp. 1-6
 > https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9037579
 
+
+# 整理
+
+## Neumann Method 
+
+1.  Coventional Neumann Method 
+
+
+    
+    ![](https://i.imgur.com/7ijNYHm.png)
+
+    
+* approximated  pseudo-inverse  matrix $A_k^{-1}$
+* $D$  denotes  diagonal  matrix  of  GRAM  matrix  $(H^HH)$
+* $E$  means off-diagonal elements of GRAM matrix
+
+
+    ![](https://i.imgur.com/d0vjAe8.png)
+
+
+2. Proposed Neumann Method 
+
+
+    $\begin{gather*}A_d^{-1} = D^{-1} - D^{-1}ED^{-1} + X_d\end{gather*}$
+    
+    $\begin{gather*}X_d = diag(X) + \sum_{1}^{T}diag_T(X) (T >= |i-j|)\end{gather*}$
