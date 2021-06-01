@@ -1,3 +1,4 @@
+[![hackmd-github-sync-badge](https://hackmd.io/YMF0dDwUSw6ObPV0FgZyxA/badge)](https://hackmd.io/YMF0dDwUSw6ObPV0FgZyxA)
 MIMO final project-massive MIMO.md
 ---
 # MIMO final project-massive MIMO
@@ -57,7 +58,18 @@ According to the survey of the linear detectors based on the approximate matrix 
 
 
     
-    ![](https://i.imgur.com/7ijNYHm.png)
+    
+\begin{gather*}
+Y = H \cdot S +n \\
+H^H(HH^H)^{-1}\cdot Y = H^H(HH^H)^{-1}\cdot S +n\\
+A_K^{-1} = \sum_{n=1}^{K}(D^{-1}E)^{n-1} \cdot D^{-1}\\
+A_1^{-1} = D^{-1}\\
+A_2^{-1} = D^{-1} - D^{-1}ED^{-1}\\
+A_3^{-1} = D^{-1}-D^{-1}ED^{-1}+D^{-1}ED^{-1}ED^{-1}
+\end{gather*}
+
+
+
 
     
 * approximated  pseudo-inverse  matrix $A_k^{-1}$
@@ -71,6 +83,17 @@ According to the survey of the linear detectors based on the approximate matrix 
 2. Proposed Neumann Method 
 
 
-    $\begin{gather*}A_d^{-1} = D^{-1} - D^{-1}ED^{-1} + X_d\end{gather*}$
+\begin{gather*}
+A_d^{-1} = D^{-1} - D^{-1}ED^{-1} + X_d
+\end{gather*}
     
-    $\begin{gather*}X_d = diag(X) + \sum_{1}^{T}diag_T(X) (T >= |i-j|)\end{gather*}$
+\begin{gather*}
+X_d = diag(X) + \sum_{1}^{T}diag_T(X) (T >= |i-j|)
+\end{gather*}
+    
+*  $X_d$ denotes  the approximated $X$ matrix
+    
+* offset $T$ between the row index (i) of $X_{ij}$ and the column index (j)of $X_{ij}$ is set to 1, 2 and 3
+
+Since the proposed  approach  uses  only  numerically  dominant  (diagonal  and near diagonal) elements of channel  matrix  for  a  low  com-plexity  matrix  inversion,  the  computational  complexity  of  ap-proximated  pseudo-inverse  matrix  is  reduced  to $O(N_U^2)$
+
