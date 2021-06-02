@@ -97,3 +97,57 @@ X_d = diag(X) + \sum_{1}^{T}diag_T(X) (T >= |i-j|)
 
 Since the proposed  approach  uses  only  numerically  dominant  (diagonal  and near diagonal) elements of channel  matrix  for  a  low  com-plexity  matrix  inversion,  the  computational  complexity  of  ap-proximated  pseudo-inverse  matrix  is  reduced  to $O(N_U^2)$
 
+
+## Successive overrelaxation (SOR) Method
+
+### $N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
+
+
+$s_c =\left[ s_{c,1},... s_{c,K}\right]^T$ transmitted signal
+$\qquad H_c\in \mathbb{C}^{N*K}$
+
+$y_c = H_cs_c+n_c \qquad     n_c$ distribution $CN(0,\sigma^2)$
+
+$H = 
+\begin{bmatrix}
+Re(H_c) & -Im(H_c) \\
+Im(H_c) & Re(H_c) 
+\end{bmatrix}_{2N\times2K}$
+
+
+$\hat{s}=(H^HH+\sigma^2I_{2K})^{-1}H^Hy=W^{-1}\hat{y}$ $\qquad\hat{y}=H^Hy$
+
+
+MMSE filtering matrix $W = G+\sigma^2I_{2K}$
+
+Gram matrix $G = H^HH = H^TH = G^T$
+
+### Matrix inversion-less signal detection utilizing SOR method
+
+**Lemma  1.** For uplink large-scale MIMO systems, the MMSE filtering matrix $W$ is symmetric positive definite.
+
+$(Hr)^THr=r^TGr>0$
+
+The SOR method is used to solve N-dimension linear equation Ax=b, where A is the N×N **symmetric positive definite matrix**, x is the N×1 solution vector, and b is the N×1 measurement vector.
+
+diagonal component $D_A$
+,lower triangular component $L_A$
+
+$x^{(i+1)}=(L_A+\frac{1}{\omega}D_A)^{-1}\left[ (( \frac{1}{\omega}-1)D_A-L_A^T )x^{(i)}+b\right]$
+
+$W=D+L+L^T$
+
+$s^{(i+1)}=(L+\frac{1}{\omega}D)^{-1}\left[ (( \frac{1}{\omega}-1)D-L^T )s^{(i)}+\hat{y}\right]$
+
+**SOR method:**
+$(L+\frac{1}{\omega}D)s^{(i+1)}=\hat{y}+ (( \frac{1}{\omega}-1)D-L^T )s^{(i)}$
+
+
+**Lemma 2.** For uplink large-scale MIMO systems, the signal detection algorithm using the SOR method is convergent when the relaxation parameter $\omega$ satisfies 0<$\omega$<2.
+
+
+Since the **complexity** of theclassical MMSE algorithm is $O(K^3)$
+
+Conventional Neumann series approximation algorithm can reduce the complexity from $O(K^3)$ to $O(K^2)$ when the number of iterations is i=2, but the complexity isstill $O(K^3)$ when i≥3.
+
+The SOR-based algorithm can iteratively realize the MMSE solution without complicated matrix inversion, which can reduce the complexity from $O(K^3)$ to $O(K^2)$.
