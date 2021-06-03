@@ -153,18 +153,18 @@ Conventional Neumann series approximation algorithm can reduce the complexity fr
 
 The SOR-based algorithm can iteratively realize the MMSE solution without complicated matrix inversion, which can reduce the complexity from $O(K^3)$ to $O(K^2)$.
 
-## Gauss–Seidel Method
+## Gauss–Seidel　（ＧＳ） Method
 
 we propose to use the diagonal component of the  MMSE  filtering  matrix  to  obtain  a  diagonal-approximate  initial solution  to  the  GS  method,  which  can  accelerate  the  convergence rate. After that, we propose an approximated method to calculate the channel  gain and the **noise-plus-interference  (NPI) variance for log-likelihood ratio (LLR)** computation, which also utilizes the diagonal dominant property of the MMSE filtering matrix.
 
 
-### $N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
+### Ａ．$N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
 
 $\hat{s}=(H^HH+\sigma^2I_{K})^{-1}H^Hy=W^{-1}\hat{y}$ 
 
 MMSE filtering matrix $W = G+\sigma^2I_{K}$
 
-### Signal Detection Algorithm Based on GS Method
+### Ｂ．Signal Detection Algorithm Based on GS Method
 
 $W=D+L+L^H$
 
@@ -172,7 +172,7 @@ $s^{(i)}=(D+L)^{-1}\left[  \bar{y}-L^Hs^{(i-1)}\right]$
 
 $i$ is the number of iterations, and $s^{(0)}$ denotes the initial solution
 
-### Diagonal-Approximate Initial Solution
+### Ｃ．Diagonal-Approximate Initial Solution
 
 $\frac{h_m^Hh_k}{N}\to 0\qquad m\not=k\qquad m,k=1,2,...,K$
 
@@ -182,12 +182,48 @@ $s^{(0)}=D^{-1}\hat{y}$
 
 increasing  value  of $N/K$, the  difference  between  the  diagonalmatrix $D^{−1}$ and the nondiagonal matrix $W^{−1}$ becomes smaller.
 
-### Approximated Method to Compute LLRs
+### Ｄ．Approximated Method to Compute LLRs
 
 略
 
-### Computational Complexity Analysis
+### Ｅ．Computational Complexity Analysis
 
 To sum up, the overall required number of complex multiplicationsby the proposed GS-based algorithm is $(i+1)K^2+4K$
 
 complexity is $O(K^2)$
+
+
+## Jacobi Method
+
+### Linear MMSE Detection
+$U=K$
+
+$\hat{x}=(H^HH+\sigma_z^2I_{K})^{-1}H^Hy=W^{-1}\hat{y}$
+
+$\hat{y} = y^{MF} = H^Hy$
+
+$W = G+\sigma_z^2I_{K}$
+
+
+### Jacobi Iterative Method
+
+$W\hat{x} = \hat{y}$
+
+$x^{(k+1)}=D^{-1}\left[ (D-W) \hat{x}^{(k)}+\hat{y}\right]$
+
+$D = diag(W)$
+
+convergence condition for Jacobi iterative method:
+
+$\lim\limits_{k\to \infty}(I_u-D^{-1}W)^k=0$
+
+$x^{(0)}=D^{-1}\hat{y}$
+
+using Jacobi iterative method
+
+$x^{(k+1)}=(\sum\limits_{l = 0}^{k+1}{-D^{-1}(W-D)}^lD^{-1})\hat{y}$
+
+That is to say, the Jacobi iterative method is equivalent to the Neumann series expansion, but using the iterative method to approach the MMSE estimation.
+
+### Computational Complexity
+With the proposed matrix vector product, we avoid the matrix multiplications and the overall computational complexity is reduced to $O(B×U)$
