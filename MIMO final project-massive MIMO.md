@@ -42,6 +42,7 @@ According to the survey of the linear detectors based on the approximate matrix 
 
 [6]	M. Wu, C. Dick, J. R. Cavallaro and C. Studer, "High-Throughput Data Detection for Massive MU-MIMO-OFDM Using Coordinate Descent," in IEEE Transactions on Circuits and Systems I: Regular Papers, vol. 63, no. 12, pp. 2357-2367, Dec. 2016
 > https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7755889
+**先不做**
 
 [7]	X. Gao, L. Dai, C. Yuen and Y. Zhang, "Low-Complexity MMSE Signal Detection Based on Richardson Method for Large-Scale MIMO Systems," 2014 IEEE 80th Vehicular Technology Conference (VTC2014-Fall), Vancouver, BC, Canada, 2014, pp. 1-5
 > https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6966041
@@ -151,3 +152,42 @@ Since the **complexity** of theclassical MMSE algorithm is $O(K^3)$
 Conventional Neumann series approximation algorithm can reduce the complexity from $O(K^3)$ to $O(K^2)$ when the number of iterations is i=2, but the complexity isstill $O(K^3)$ when i≥3.
 
 The SOR-based algorithm can iteratively realize the MMSE solution without complicated matrix inversion, which can reduce the complexity from $O(K^3)$ to $O(K^2)$.
+
+## Gauss–Seidel Method
+
+we propose to use the diagonal component of the  MMSE  filtering  matrix  to  obtain  a  diagonal-approximate  initial solution  to  the  GS  method,  which  can  accelerate  the  convergence rate. After that, we propose an approximated method to calculate the channel  gain and the **noise-plus-interference  (NPI) variance for log-likelihood ratio (LLR)** computation, which also utilizes the diagonal dominant property of the MMSE filtering matrix.
+
+
+### $N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
+
+$\hat{s}=(H^HH+\sigma^2I_{K})^{-1}H^Hy=W^{-1}\hat{y}$ 
+
+MMSE filtering matrix $W = G+\sigma^2I_{K}$
+
+### Signal Detection Algorithm Based on GS Method
+
+$W=D+L+L^H$
+
+$s^{(i)}=(D+L)^{-1}\left[  \bar{y}-L^Hs^{(i-1)}\right]$
+
+$i$ is the number of iterations, and $s^{(0)}$ denotes the initial solution
+
+### Diagonal-Approximate Initial Solution
+
+$\frac{h_m^Hh_k}{N}\to 0\qquad m\not=k\qquad m,k=1,2,...,K$
+
+$h_m$ denotes themth column vector of the channel matrix $H$
+
+$s^{(0)}=D^{-1}\hat{y}$
+
+increasing  value  of $N/K$, the  difference  between  the  diagonalmatrix $D^{−1}$ and the nondiagonal matrix $W^{−1}$ becomes smaller.
+
+### Approximated Method to Compute LLRs
+
+略
+
+### Computational Complexity Analysis
+
+To sum up, the overall required number of complex multiplicationsby the proposed GS-based algorithm is $(i+1)K^2+4K$
+
+complexity is $O(K^2)$
