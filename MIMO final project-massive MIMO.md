@@ -227,3 +227,64 @@ That is to say, the Jacobi iterative method is equivalent to the Neumann series 
 
 ### Computational Complexity
 With the proposed matrix vector product, we avoid the matrix multiplications and the overall computational complexity is reduced to $O(B×U)$
+
+
+## Conjugate Gradients Method
+
+### CG-Based data detection and precoding - Conjugate Gradient (CG) Basics
+
+$\hat{g}=\begin{equation}
+	\mathop{\arg\min}_{\tilde{g}\in  \mathbb{C}^U} \ \ \| \mathrm{b-A\tilde{g}} \|.
+\end{equation} \qquad A\in \mathbb{C}^{U\times U}$
+
+In  contraryto  direct  methods  that  compute $\hat{g}=A^{−1}b$,  CG  iterativelycomputes  the  solutionˆgwith  each  iteration  requiring  lowcomputational complexity.
+
+### CG-D: CG-Based Soft-Output Data Detection
+
+$\hat{x}=\begin{equation}
+	\mathop{\arg\min}_{\tilde{x}\in  \mathbb{C}^U} \ \ \| \mathrm{H_u^Hy-A\tilde{x}} \|.
+\end{equation}$
+
+$A= H_u^HH_u+\rho_u^{-1}I_U$
+
+```
+1:input:
+2:Huandy{detection}
+3:Hdandt{precoding}
+4:initialization:
+5:b=HHuyandA=HHuHu+%−1uIU{detection}
+6:b=tandA=HdHHd+%−1dIU{precoding}
+7:v0=0,r0=b, andp0=r0
+8:for k= 1,...,K do
+9:ek−1=Apk−1
+10:αk=‖rk−1‖2/(pHk−1ek−1)
+11:vk=vk−1+αkpk−1
+12:rk=rk−1−αkek−1
+13:βk=‖rk‖2/‖rk−1‖2
+14:pk=rk+βkpk−1
+15:computeμi|k,∀i, as in (14){detection}
+16:computeρi|k,∀i, as in (15){detection}
+17:end for
+18:output:
+19:ˆxK=vK,μi|K,∀i, andρi|K,∀i,{detection}
+20:qK=HHdvK{precoding}
+```
+
+### SINR Computation Methods
+
+$\hat{x_k}=L_kH_u^Hy$
+
+$L_kH_u^H$ CG-equivalent equalization matrix
+
+......
+
+Another well-known variant of CG is the so-called conjugate gradient  least  squares  (CGLS)  method
+
+$\hat{x}=\begin{equation}
+	\mathop{\arg\min}_{\tilde{x}\in  \mathbb{C}^U} \ \ \| \mathrm{\bar{y}-\bar{H_u}\tilde{x}} \|.
+\end{equation}$
+
+
+### Computational Complexity Analysis
+
+![](https://i.imgur.com/wff1DIF.png)
