@@ -288,3 +288,84 @@ $\hat{x}=\begin{equation}
 ### Computational Complexity Analysis
 
 ![](https://i.imgur.com/wff1DIF.png)
+
+
+## Richardson Method
+
+$\hat{s}=(H^HH+\sigma^2I_{2K})^{-1}H^Hy=W^{-1}\hat{y}$
+
+MMSE filtering matrix $W = G+\sigma^2I_{2K}$
+
+### Signal detection based on Richardson method
+
+**Lemma  1.** For signal detection in uplink large-scale MIMO　systems, the MMSE filtering matrix $W$ is symmetric positive definite
+
+The Richardson method is used to solve N-dimension linear equation formulated as
+$Ax=b$
+
+$x$ is the N×1 solution vector, and $b$ is the N×1 measurement vector
+
+$x^{(i+1)}=x^{(i)}+\omega(b-Ax^{(i)}) \qquad i=0,1,2...$
+
+$s^{(i+1)}=s^{(i)}+\omega(\hat{y}-Ws^{(i)}) \qquad i=0,1,2...$
+
+**Lemma  2.** For the N-dimension linear equation $Ax=b$, the necessary and sufficient conditions for convergence of Richardson method is that the relaxation parameter satisfies $0<w<2/λ1$ ,  where $λ1$ is the largest eigenvalue of the symmetric positive definite matrix $A$. 
+
+iteration matrix $D = I_N-\omega A \qquad c=\omega b$
+
+$\rho (D)=\begin{equation}
+	\mathop{\max}_{1\le n\le N} \ \| \mathrm{\mu_n (D)} \|.
+\end{equation}<1$
+
+$\mu_n (D)=1-\omega \lambda_n \qquad \lambda_n$denotes the $n$th eigenvalue of $A$
+
+### Zone-based initial solution
+The last task in the Richardson method is to determine the initial solution, which is usually set as a zero vector
+
+**Lemma  3.** For uplink large-scale MIMO systems, we always have $\hat{s_i} \hat{y_i}$ , where $\hat{s_i}$ and $\hat{y_i}$ denote the $i$th element of $\hat{s}$ and $\hat{y}$, respectively.
+
+$\hat{s_i} \hat{y_i}=(\sum\limits_{j = 1}^{2K}{W_{ij}^{-1}\hat{y_i}})\hat{y_i}\approx W_{ii}^{-1}\hat{y_i}\hat{y_i}>0$
+
+![](https://i.imgur.com/WEqy0Ip.png)
+
+
+### Computational complexity analysis
+
+the complexity of the proposed algorithm is considerably reduced from $O(K^3)$ to $O(K^2)$ for any arbitrary number of iterations.
+
+
+## Approximate Matrix Inversion Methods vs. Approximate Message Passing (AMP) 
+
+$y  =  Hx  +  n$
+
+Linear detector stands on a linear transformation of the output signal vectory using a linear equalization/transformationmatrix T which is given as
+
+$d = Ty$
+
+### pproximate matrix inversion methods
+
+1. SOR method
+
+    $\hat{x}^{(n)}=(\frac{1}{\omega}D+L)^{-1}(\hat{x}_{MF}+((\frac{1}{\omega}-1)D-U)\hat{x}^{(n-1)})$
+    
+    SOR  method  isconvergent when $ω$ satisfies $0<ω<2$
+    
+2. GS method
+    
+    $\hat{x}^{(n)}=(D+L)^{-1}(\hat{x}_{MF}-U\hat{x}^{(n-1)}) \qquad n=1,2,...$
+     
+     the GS method is not suitable for parallelimplementation
+    
+
+### pproximate message passing
+Simplifying the belief  propagation(BP) algorithm produces  a  new  class  of  low-complexity  iterative  algorithms named as approximate message passing (AMP)
+
+$z^n=y-Hx^{n-1}+\frac{K}{N}\frac{\sigma^2}{\sigma^2+ \alpha^{n-1}}z^{n-1}$
+
+$\alpha^n=N_o^2+\frac{K}{N}\frac{\alpha^{n-1}\sigma^2}{\sigma^2+ \alpha^{n-1}}$
+
+$x^n=\frac{\sigma^2}{\sigma^2+ \alpha^{n-1}}(H^Hz^n+x^{n-1})$
+
+$z^n$ is  the  residual,$σ^2$ is  the  signal  power  and  the initialization are $z^0=0$,$x^0=0$, and $α^0=σ^2$.
+
+it is noteworthy that  the  complexity  of  the  AMP  algorithm  is $O(nKN)$
