@@ -51,7 +51,7 @@ According to the survey of the linear detectors based on the approximate matrix 
 > https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9037579
 
 
-# 整理
+# 整理-不同method數學推導
 
 ## Neumann Method 
 
@@ -369,3 +369,10 @@ $x^n=\frac{\sigma^2}{\sigma^2+ \alpha^{n-1}}(H^Hz^n+x^{n-1})$
 $z^n$ is  the  residual,$σ^2$ is  the  signal  power  and  the initialization are $z^0=0$,$x^0=0$, and $α^0=σ^2$.
 
 it is noteworthy that  the  complexity  of  the  AMP  algorithm  is $O(nKN)$
+
+
+
+# 討論bigO
+# 模擬結果
+# 討論各method優劣
+# 有無更好的方法?
