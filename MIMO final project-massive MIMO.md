@@ -53,6 +53,31 @@ According to the survey of the linear detectors based on the approximate matrix 
 
 # 整理-不同method數學推導
 
+
+### $N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
+
+
+$s_c =\left[ s_{c,1},... s_{c,K}\right]^T$ transmitted signal
+$\qquad H_c\in \mathbb{C}^{N*K}$
+
+$y_c = H_cs_c+n_c \qquad     n_c$ distribution $CN(0,\sigma^2)$
+
+$H = 
+\begin{bmatrix}
+Re(H_c) & -Im(H_c) \\
+Im(H_c) & Re(H_c) 
+\end{bmatrix}_{2N\times2K}$
+
+$y = Hs+n$
+
+
+$\hat{s}=(H^HH+\sigma^2I_{2K})^{-1}H^Hy=W^{-1}\hat{y}$ $\qquad\hat{y}=H^Hy$
+
+
+MMSE filtering matrix $W = G+\sigma^2I_{2K}$
+
+Gram matrix $G = H^HH = H^TH = G^T$
+
 ## Neumann Method 
 
 1.  Coventional Neumann Method 
@@ -101,27 +126,7 @@ Since the proposed  approach  uses  only  numerically  dominant  (diagonal  and 
 
 ## Successive overrelaxation (SOR) Method
 
-### $N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
 
-
-$s_c =\left[ s_{c,1},... s_{c,K}\right]^T$ transmitted signal
-$\qquad H_c\in \mathbb{C}^{N*K}$
-
-$y_c = H_cs_c+n_c \qquad     n_c$ distribution $CN(0,\sigma^2)$
-
-$H = 
-\begin{bmatrix}
-Re(H_c) & -Im(H_c) \\
-Im(H_c) & Re(H_c) 
-\end{bmatrix}_{2N\times2K}$
-
-
-$\hat{s}=(H^HH+\sigma^2I_{2K})^{-1}H^Hy=W^{-1}\hat{y}$ $\qquad\hat{y}=H^Hy$
-
-
-MMSE filtering matrix $W = G+\sigma^2I_{2K}$
-
-Gram matrix $G = H^HH = H^TH = G^T$
 
 ### Matrix inversion-less signal detection utilizing SOR method
 
@@ -158,13 +163,8 @@ The SOR-based algorithm can iteratively realize the MMSE solution without compli
 we propose to use the diagonal component of the  MMSE  filtering  matrix  to  obtain  a  diagonal-approximate  initial solution  to  the  GS  method,  which  can  accelerate  the  convergence rate. After that, we propose an approximated method to calculate the channel  gain and the **noise-plus-interference  (NPI) variance for log-likelihood ratio (LLR)** computation, which also utilizes the diagonal dominant property of the MMSE filtering matrix.
 
 
-### Ａ．$N$  antennas at the BS to simultaneously serve  $K$ single-antenna UE N>>K
 
-$\hat{s}=(H^HH+\sigma^2I_{K})^{-1}H^Hy=W^{-1}\hat{y}$ 
-
-MMSE filtering matrix $W = G+\sigma^2I_{K}$
-
-### Ｂ．Signal Detection Algorithm Based on GS Method
+### Signal Detection Algorithm Based on GS Method
 
 $W=D+L+L^H$
 
@@ -172,7 +172,7 @@ $s^{(i)}=(D+L)^{-1}\left[  \bar{y}-L^Hs^{(i-1)}\right]$
 
 $i$ is the number of iterations, and $s^{(0)}$ denotes the initial solution
 
-### Ｃ．Diagonal-Approximate Initial Solution
+### Diagonal-Approximate Initial Solution
 
 $\frac{h_m^Hh_k}{N}\to 0\qquad m\not=k\qquad m,k=1,2,...,K$
 
@@ -182,11 +182,11 @@ $s^{(0)}=D^{-1}\hat{y}$
 
 increasing  value  of $N/K$, the  difference  between  the  diagonalmatrix $D^{−1}$ and the nondiagonal matrix $W^{−1}$ becomes smaller.
 
-### Ｄ．Approximated Method to Compute LLRs
+### Approximated Method to Compute LLRs
 
 略
 
-### Ｅ．Computational Complexity Analysis
+### Computational Complexity Analysis
 
 To sum up, the overall required number of complex multiplicationsby the proposed GS-based algorithm is $(i+1)K^2+4K$
 
@@ -195,14 +195,15 @@ complexity is $O(K^2)$
 
 ## Jacobi Method
 
-### Linear MMSE Detection
-$U=K$
+user number (U) and receive antenna number (B) //非一開始的K個單一接收天線的user
 
-$\hat{x}=(H^HH+\sigma_z^2I_{K})^{-1}H^Hy=W^{-1}\hat{y}$
+### Linear MMSE Detection
+
+$\hat{x}=(H^HH+\sigma_n^2I_{U})^{-1}H^Hy=W^{-1}\hat{y}$
 
 $\hat{y} = y^{MF} = H^Hy$
 
-$W = G+\sigma_z^2I_{K}$
+$W = G+\sigma_n^2I_{U}$
 
 
 ### Jacobi Iterative Method
@@ -270,6 +271,8 @@ $A= H_u^HH_u+\rho_u^{-1}I_U$
 20:qK=HHdvK{precoding}
 ```
 
+程式附上好像沒什麼用，可刪
+
 ### SINR Computation Methods
 
 $\hat{x_k}=L_kH_u^Hy$
@@ -290,11 +293,7 @@ $\hat{x}=\begin{equation}
 ![](https://i.imgur.com/wff1DIF.png)
 
 
-## Richardson Method
-
-$\hat{s}=(H^HH+\sigma^2I_{2K})^{-1}H^Hy=W^{-1}\hat{y}$
-
-MMSE filtering matrix $W = G+\sigma^2I_{2K}$
+## Richardson Method   (和sor比較接近)
 
 ### Signal detection based on Richardson method
 
@@ -373,6 +372,52 @@ it is noteworthy that  the  complexity  of  the  AMP  algorithm  is $O(nKN)$
 
 
 # 討論bigO
+* Neumann
+
+Since the proposed  approach  uses  only  numerically  dominant  (diagonal  and near diagonal) elements of channel  matrix  for  a  low  com-plexity  matrix  inversion,  the  computational  complexity  of  ap-proximated  pseudo-inverse  matrix  is  reduced  to $O(N_U^2)$
+
+* SOR 
+
+Since the **complexity** of theclassical MMSE algorithm is $O(K^3)$
+
+Conventional Neumann series approximation algorithm can reduce the complexity from $O(K^3)$ to $O(K^2)$ when the number of iterations is i=2, but the complexity isstill $O(K^3)$ when i≥3.
+
+The SOR-based algorithm can iteratively realize the MMSE solution without complicated matrix inversion, which can reduce the complexity from $O(K^3)$ to $O(K^2)$.
+
+* GS
+
+
+To sum up, the overall required number of complex multiplicationsby the proposed GS-based algorithm is $(i+1)K^2+4K$
+
+complexity is $O(K^2)$
+
+* Jacobi
+
+With the proposed matrix vector product, we avoid the matrix multiplications and the overall computational complexity is reduced to $O(B×U)$
+
+* CG
+
+* Richardson
+
+the complexity of the proposed algorithm is considerably reduced from $O(K^3)$ to $O(K^2)$ for any arbitrary number of iterations.
+
+
+* AMP
+
+ it is noteworthy that  the  complexity  of  the  AMP  algorithm  is $O(nKN)$
+
+
+
+
 # 模擬結果
+![](https://i.imgur.com/FQt84jn.png)
+![](https://i.imgur.com/jWPnDrV.png)
+![](https://i.imgur.com/09k2IVF.png)
+![](https://i.imgur.com/CW3Vkn3.png)
+![](https://i.imgur.com/TYNgUJE.png)
+
+
+
+
 # 討論各method優劣
 # 有無更好的方法?
